@@ -1,4 +1,4 @@
-package com.androidestudos.fiapchallange
+package com.androidestudos.fiapchallange.network
 
 import android.util.Log
 import okhttp3.Interceptor

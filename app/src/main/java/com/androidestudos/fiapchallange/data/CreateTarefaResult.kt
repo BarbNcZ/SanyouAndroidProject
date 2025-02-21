@@ -1,4 +1,4 @@
-package com.androidestudos.fiapchallange
+package com.androidestudos.fiapchallange.data
 
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
