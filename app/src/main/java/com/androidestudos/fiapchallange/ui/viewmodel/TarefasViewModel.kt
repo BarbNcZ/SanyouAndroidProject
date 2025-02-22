@@ -1,7 +1,9 @@
-package com.androidestudos.fiapchallange
+package com.androidestudos.fiapchallange.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.androidestudos.fiapchallange.data.CreateTarefaResult
+import com.androidestudos.fiapchallange.repository.TarefasRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.last

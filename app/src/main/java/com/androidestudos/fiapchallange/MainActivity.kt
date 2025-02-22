@@ -20,7 +20,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.androidestudos.fiapchallange.data.CreateTarefaResult
 import com.androidestudos.fiapchallange.ui.theme.FiapChallangeTheme
+import com.androidestudos.fiapchallange.ui.viewmodel.TarefasViewModel
 import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {

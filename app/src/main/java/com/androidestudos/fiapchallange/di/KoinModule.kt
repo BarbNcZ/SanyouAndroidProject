@@ -1,6 +1,6 @@
-import com.androidestudos.fiapchallange.APIServerDataSource
-import com.androidestudos.fiapchallange.TarefasRepository
-import com.androidestudos.fiapchallange.TarefasViewModel
+import com.androidestudos.fiapchallange.network.APIServerDataSource
+import com.androidestudos.fiapchallange.repository.TarefasRepository
+import com.androidestudos.fiapchallange.ui.viewmodel.TarefasViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 

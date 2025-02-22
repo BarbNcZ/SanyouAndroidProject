@@ -1,5 +1,6 @@
-package com.androidestudos.fiapchallange
+package com.androidestudos.fiapchallange.network
 
+import com.androidestudos.fiapchallange.data.CreateTarefaResult
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
