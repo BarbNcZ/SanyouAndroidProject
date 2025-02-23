@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CreateTarefaResult(
-    @SerializedName("id_tarefa")
-    val idTarefa: Int
+data class DeleteTarefasResult (
+    @SerializedName("result")
+    val result: Boolean
 )

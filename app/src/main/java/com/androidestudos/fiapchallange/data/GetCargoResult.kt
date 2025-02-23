@@ -4,7 +4,10 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CreateTarefaResult(
-    @SerializedName("id_tarefa")
-    val idTarefa: Int
+data class GetCargoResult (
+    @SerializedName("cd_cargo")
+    val cdCargo: Int,
+    @SerializedName("ds_cargo")
+    val dsCargo: String
+
 )
