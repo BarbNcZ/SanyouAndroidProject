@@ -6,6 +6,7 @@ import com.androidestudos.fiapchallange.data.CreateTarefaResult
 import com.androidestudos.fiapchallange.data.DeleteTarefasResult
 import com.androidestudos.fiapchallange.data.GetCargoResultList
 import com.androidestudos.fiapchallange.data.GetDepartamentoResultList
+import com.androidestudos.fiapchallange.data.GetFuncionarioResultList
 import com.androidestudos.fiapchallange.data.GetTarefasResultList
 import com.androidestudos.fiapchallange.data.GetTipoTarefaResultList
 import okhttp3.OkHttpClient
@@ -15,11 +16,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 class APIServerDataSource(private val api: APIServer) {
     suspend fun createTarefa(
         cdTipoTarefa: Int,
+        cdFuncionario: Int,
         dsTarefas: String
     ): CreateTarefaResult? {
 
         return kotlin.runCatching{
-            val result = api.createTarefa(cdTipoTarefa, dsTarefas)
+            val result = api.createTarefa(cdTipoTarefa, dsTarefas, cdFuncionario )
             if (result.isSuccessful){
                 result.body()
             }
@@ -128,6 +130,24 @@ class APIServerDataSource(private val api: APIServer) {
 
         } .getOrElse{ e ->
             Log.e(this::class.java.simpleName, "Falha ao buscar cargos ${e.message}")
+            null
+        }
+
+    }
+
+    suspend fun getFuncionario(): GetFuncionarioResultList? {
+
+        return kotlin.runCatching{
+            val result = api.getFuncionario()
+            if (result.isSuccessful){
+                result.body()
+            }
+            else {
+                throw Exception("Erro desconhecido")
+            }
+
+        } .getOrElse{ e ->
+            Log.e(this::class.java.simpleName, "Falha ao buscar funcionarios ${e.message}")
             null
         }
 

@@ -14,6 +14,7 @@ jvm = "2.1.0"
 serialization = "1.8.0"
 koin = "4.0.0"
 lifecycleRuntimeComposeAndroid = "2.8.7"
+navigationCompose = "2.8.8"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -23,6 +24,7 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
@@ -37,6 +39,7 @@ koinCore = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" 
 koinAndroid = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koinCompose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

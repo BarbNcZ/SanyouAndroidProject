@@ -1,4 +1,4 @@
-package com.androidestudos.fiapchallange.ui.view
+package com.androidestudos.fiapchallange.ui.view.atoms
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenuItem
@@ -9,25 +9,27 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.androidestudos.fiapchallange.data.GetCargoResult
-import com.androidestudos.fiapchallange.data.GetTipoTarefaResult
+import com.androidestudos.fiapchallange.data.GetFuncionarioResult
+import com.androidestudos.fiapchallange.data.GetTarefasResult
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CargosDropDownMenu(
+fun FuncionariosDropDownMenu(
     selectedValue: String,
-    options: List<GetCargoResult>,
+    options: List<GetFuncionarioResult>,
     label: String,
     onValueChangedEvent: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selected by remember { mutableStateOf(selectedValue) }
+
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -49,13 +51,13 @@ fun CargosDropDownMenu(
         )
 
         ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            options.forEach { cargo: GetCargoResult ->
+            options.forEach { funcionario: GetFuncionarioResult ->
                 DropdownMenuItem(
-                    text = { Text(text = cargo.dsCargo) },
+                    text = { Text(text = "${funcionario.nmFuncionario} (${funcionario.dsCargo} - ${funcionario.nmDepto})") },
                     onClick = {
                         expanded = false
-                        selected = cargo.dsCargo
-                        onValueChangedEvent(cargo.cdCargo)
+                        selected = "${funcionario.nmFuncionario} (${funcionario.dsCargo} - ${funcionario.nmDepto})"
+                        onValueChangedEvent(funcionario.cdFuncionario)
                     }
                 )
             }

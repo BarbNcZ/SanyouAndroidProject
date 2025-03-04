@@ -1,4 +1,4 @@
-package com.androidestudos.fiapchallange.ui.view
+package com.androidestudos.fiapchallange.ui.view.atoms
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenuItem
@@ -14,15 +14,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.androidestudos.fiapchallange.data.GetCargoResult
-import com.androidestudos.fiapchallange.data.GetDepartamentoResult
 import com.androidestudos.fiapchallange.data.GetTipoTarefaResult
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DeptosDropDownMenu(
+fun TiposTarefaDropDownMenu(
     selectedValue: String,
-    options: List<GetDepartamentoResult>,
+    options: List<GetTipoTarefaResult>,
     label: String,
     onValueChangedEvent: (Int) -> Unit,
     modifier: Modifier = Modifier
@@ -50,13 +48,13 @@ fun DeptosDropDownMenu(
         )
 
         ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            options.forEach { depto: GetDepartamentoResult ->
+            options.forEach { tipoTarefa: GetTipoTarefaResult ->
                 DropdownMenuItem(
-                    text = { Text(text = depto.nmDepartamento) },
+                    text = { Text(text = tipoTarefa.dsTipoTarefa) },
                     onClick = {
                         expanded = false
-                        selected = depto.nmDepartamento
-                        onValueChangedEvent(depto.cdDepartamento)
+                        selected = tipoTarefa.dsTipoTarefa
+                        onValueChangedEvent(tipoTarefa.cdTipoTarefa)
                     }
                 )
             }

@@ -7,6 +7,7 @@ import com.androidestudos.fiapchallange.data.GetCargoResult
 import com.androidestudos.fiapchallange.data.GetCargoResultList
 import com.androidestudos.fiapchallange.data.GetDepartamentoResult
 import com.androidestudos.fiapchallange.data.GetDepartamentoResultList
+import com.androidestudos.fiapchallange.data.GetFuncionarioResultList
 import com.androidestudos.fiapchallange.data.GetTarefasResultList
 import com.androidestudos.fiapchallange.data.GetTipoTarefaResultList
 import retrofit2.Response
@@ -18,8 +19,12 @@ import retrofit2.http.Path
 
 interface APIServer {
 
-    @PUT("/createtarefa/{cd_tipo_tarefa}/{ds_tarefas}")
-    suspend fun createTarefa(@Path("cd_tipo_tarefa") cdTipoTarefa: Int, @Path("ds_tarefas") dsTarefas: String): Response<CreateTarefaResult>
+    @PUT("/createtarefa/{cd_tipo_tarefa}/{ds_tarefas}/{cd_funcionario}")
+    suspend fun createTarefa(
+        @Path("cd_tipo_tarefa") cdTipoTarefa: Int,
+        @Path("ds_tarefas") dsTarefas: String,
+        @Path("cd_funcionario") cdFuncioanrio: Int
+    ): Response<CreateTarefaResult>
 
     @GET("/tipotarefa")
     suspend fun getTipoTarefa(): Response<GetTipoTarefaResultList>
@@ -35,6 +40,9 @@ interface APIServer {
 
     @GET("/cargo")
     suspend fun getCargo(): Response<GetCargoResultList>
+
+    @GET("/funcionarios")
+    suspend fun getFuncionario(): Response<GetFuncionarioResultList>
 
     @PUT("/createfuncionario/{cd_depto}/{cd_cargo}/{ds_email}/{nm_funcionario}")
     suspend fun createFuncionario(

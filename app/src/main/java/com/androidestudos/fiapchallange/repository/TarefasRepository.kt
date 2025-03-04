@@ -6,6 +6,7 @@ import com.androidestudos.fiapchallange.data.CreateTarefaResult
 import com.androidestudos.fiapchallange.data.DeleteTarefasResult
 import com.androidestudos.fiapchallange.data.GetCargoResultList
 import com.androidestudos.fiapchallange.data.GetDepartamentoResultList
+import com.androidestudos.fiapchallange.data.GetFuncionarioResultList
 import com.androidestudos.fiapchallange.data.GetTarefasResultList
 import com.androidestudos.fiapchallange.data.GetTipoTarefaResultList
 import kotlinx.coroutines.Dispatchers
@@ -19,13 +20,14 @@ class TarefasRepository (
 
     fun createTarefa(
         cdTipoTarefa: Int,
+        cdFuncionario: Int,
         dsTarefas: String
     ) : Flow<CreateTarefaResult?> {
 
         return flow {
 
             emit(withContext(Dispatchers.IO) {
-                dataSource.createTarefa(cdTipoTarefa, dsTarefas)
+                dataSource.createTarefa(cdTipoTarefa, cdFuncionario , dsTarefas)
 
             })
 
@@ -111,6 +113,18 @@ class TarefasRepository (
             emit(
                 withContext(Dispatchers.IO) {
                     dataSource.getCargo()
+                }
+            )
+        }
+    }
+
+    fun getFuncionarios() :Flow<GetFuncionarioResultList?> {
+
+        return flow {
+
+            emit(
+                withContext(Dispatchers.IO) {
+                    dataSource.getFuncionario()
                 }
             )
         }

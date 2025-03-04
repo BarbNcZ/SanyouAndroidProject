@@ -1,4 +1,4 @@
-package com.androidestudos.fiapchallange.ui.view
+package com.androidestudos.fiapchallange.ui.view.atoms
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenuItem

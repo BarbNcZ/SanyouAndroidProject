@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.androidestudos.fiapchallange.data.GetCargoResult
 import com.androidestudos.fiapchallange.data.GetDepartamentoResult
+import com.androidestudos.fiapchallange.data.GetFuncionarioResult
 import com.androidestudos.fiapchallange.data.GetTarefasResult
 import com.androidestudos.fiapchallange.data.GetTipoTarefaResult
 import com.androidestudos.fiapchallange.repository.TarefasRepository
@@ -12,6 +13,7 @@ import com.androidestudos.fiapchallange.ui.models.TarefasState
 import com.androidestudos.fiapchallange.utils.CargoMapper
 import com.androidestudos.fiapchallange.utils.DelTarefaMapper
 import com.androidestudos.fiapchallange.utils.DepartamentoMapper
+import com.androidestudos.fiapchallange.utils.FuncionarioMapper
 import com.androidestudos.fiapchallange.utils.TarefaMapper
 import com.androidestudos.fiapchallange.utils.TipoTarefaMapper
 import kotlinx.coroutines.channels.Channel
@@ -22,36 +24,36 @@ import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-class TarefasViewModel (
+class TarefasViewModel(
     val repository: TarefasRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = MutableStateFlow<TarefasState>(TarefasState())
     val state: StateFlow<TarefasState> = _state
     private val _event = Channel<TarefasEvents>()
     val event: Flow<TarefasEvents> = _event.receiveAsFlow()
 
-    init{
+    init {
         getTipoTarefa()
         getTarefas()
         getCargo()
         getDepartamento()
+        getFuncionario()
     }
 
-    fun createTarefa(cdTipoTarefa: Int, dsTarefa: String){
+    fun createTarefa(cdTipoTarefa: Int, cdFuncionario: Int, dsTarefa: String) {
         viewModelScope.launch {
             _state.value = _state.value.copy(
                 idTarefa = repository.createTarefa(
                     cdTipoTarefa = cdTipoTarefa,
+                    cdFuncionario = cdFuncionario,
                     dsTarefas = dsTarefa
                 ).last()?.idTarefa ?: -1
             )
-
         }
-
     }
 
-    private fun getTipoTarefa(){
+    private fun getTipoTarefa() {
         viewModelScope.launch {
             val mapper: TipoTarefaMapper = TipoTarefaMapper()
             val tiposTarefa: List<GetTipoTarefaResult> =
@@ -59,14 +61,12 @@ class TarefasViewModel (
                     repository.getTipoTarefa().last()?.tipoTarefas ?: arrayOf()
                 )
             _state.value = _state.value.copy(
-                tiposTarefa =  tiposTarefa
+                tiposTarefa = tiposTarefa
             )
-
         }
-
     }
 
-    private fun getTarefas(){
+    private fun getTarefas() {
         viewModelScope.launch {
             val mapper: TarefaMapper = TarefaMapper()
             val tarefas: List<GetTarefasResult> =
@@ -74,33 +74,27 @@ class TarefasViewModel (
                     repository.getTarefas().last()?.tarefas ?: arrayOf()
                 )
             _state.value = _state.value.copy(
-                tarefas =  tarefas
+                tarefas = tarefas
             )
-
         }
-
     }
 
-    fun deleteTarefa(cdTarefa: Int){
+    fun deleteTarefa(cdTarefa: Int) {
         viewModelScope.launch {
             val mapper: DelTarefaMapper = DelTarefaMapper()
             val result: Boolean? = mapper.fromDeleteTarefaResultToBoolean(
-                    deleteTarefasResult = repository.deleteTarefa(
-                            cdTarefa = cdTarefa
-                            ).last()
-                    )
+                deleteTarefasResult = repository.deleteTarefa(
+                    cdTarefa = cdTarefa
+                ).last()
+            )
 
-            if (result == true){
+            if (result == true) {
                 _event.send(TarefasEvents.DeletedSuccessfully)
                 getTarefas()
-            }
-
-            else{
+            } else {
                 _event.send(TarefasEvents.DeletionFailed)
             }
-
         }
-
     }
 
     fun createFuncionario(
@@ -108,7 +102,7 @@ class TarefasViewModel (
         cdCargo: Int,
         dsEmail: String,
         nmFuncionario: String
-    ){
+    ) {
         viewModelScope.launch {
             _state.value = _state.value.copy(
                 idFuncionario = repository.createFuncionario(
@@ -118,12 +112,10 @@ class TarefasViewModel (
                     nmFuncionario
                 ).last()?.idFuncionario ?: -1
             )
-
         }
-
     }
 
-    private fun getCargo(){
+    private fun getCargo() {
         viewModelScope.launch {
             val mapper: CargoMapper = CargoMapper()
             val cargo: List<GetCargoResult> =
@@ -131,14 +123,25 @@ class TarefasViewModel (
                     repository.getCargo().last()?.cargo ?: arrayOf()
                 )
             _state.value = _state.value.copy(
-                cargos =  cargo
+                cargos = cargo
             )
-
         }
-
     }
 
-    private fun getDepartamento(){
+    private fun getFuncionario() {
+        viewModelScope.launch {
+            val mapper: FuncionarioMapper = FuncionarioMapper()
+            val funcionario: List<GetFuncionarioResult> =
+                mapper.fromGetFuncionarioResultListToListOfGetFuncionarioResult(
+                    repository.getFuncionarios().last()?.funcionario ?: arrayOf()
+                )
+            _state.value = _state.value.copy(
+                funcionarios = funcionario
+            )
+        }
+    }
+
+    private fun getDepartamento() {
         viewModelScope.launch {
             val mapper: DepartamentoMapper = DepartamentoMapper()
             val departamento: List<GetDepartamentoResult> =
@@ -146,11 +149,8 @@ class TarefasViewModel (
                     repository.getDepartamento().last()?.depto ?: arrayOf()
                 )
             _state.value = _state.value.copy(
-                departamentos =  departamento
+                departamentos = departamento
             )
-
         }
-
     }
-
 }
