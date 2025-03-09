@@ -1,4 +1,4 @@
-package com.androidestudos.fiapchallange.ui.view.pages.employees
+package com.androidestudos.fiapchallange.ui.view.pages.createDeleteTarefa
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
@@ -9,14 +9,18 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
+import com.androidestudos.fiapchallange.ui.Route
 import com.androidestudos.fiapchallange.ui.models.TarefasEvents
+import com.androidestudos.fiapchallange.ui.view.pages.createDeleteTarefa.CreateDeleteTarefaScreen
 import com.androidestudos.fiapchallange.ui.viewmodel.TarefasViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun EmployeesContainer(
-    viewModel: TarefasViewModel = koinViewModel()
+fun CreateDeleteTarefaContainer(
+    viewModel: TarefasViewModel = koinViewModel(),
+    navHostController: NavHostController
 ){
 
     val state = viewModel.state.collectAsStateWithLifecycle()
@@ -51,10 +55,15 @@ fun EmployeesContainer(
         }
     }
 
-    EmployeesScreen(
-        state.value.idFuncionario,
-        viewModel::createFuncionario,
-        state.value.departamentos,
-        state.value.cargos
+    CreateDeleteTarefaScreen(
+        goToEmployeesScreen = {
+            navHostController.navigate(Route.Employees.route)
+        },
+        state.value.idTarefa,
+        state.value.tiposTarefa,
+        state.value.tarefas,
+        viewModel::createTarefa,
+        viewModel::deleteTarefa,
+        state.value.funcionarios
     )
 }

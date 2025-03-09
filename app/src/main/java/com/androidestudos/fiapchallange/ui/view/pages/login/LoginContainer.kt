@@ -1,4 +1,4 @@
-package com.androidestudos.fiapchallange.ui.view.pages.employees
+package com.androidestudos.fiapchallange.ui.view.pages.login
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
@@ -9,22 +9,27 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
+import com.androidestudos.fiapchallange.ui.Route
 import com.androidestudos.fiapchallange.ui.models.TarefasEvents
+import com.androidestudos.fiapchallange.ui.view.pages.employees.EmployeesScreen
 import com.androidestudos.fiapchallange.ui.viewmodel.TarefasViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun EmployeesContainer(
-    viewModel: TarefasViewModel = koinViewModel()
+fun LoginContainer(
+    viewModel: TarefasViewModel = koinViewModel(),
+    navHostController: NavHostController,
 ){
 
     val state = viewModel.state.collectAsStateWithLifecycle()
+
+    val lifeCycleOwner = LocalLifecycleOwner.current
+
     val context = LocalContext.current
 
     val scope = rememberCoroutineScope()
-
-    val lifeCycleOwner = LocalLifecycleOwner.current
 
     DisposableEffect(lifeCycleOwner) {
 
@@ -34,10 +39,19 @@ fun EmployeesContainer(
                 scope.launch {
                     viewModel.event.collect{ event ->
                         when(event){
-                            TarefasEvents.DeletedSuccessfully ->
-                                Toast.makeText(context, "Tarefa deletada", Toast.LENGTH_SHORT).show()
-                            TarefasEvents.DeletionFailed ->
-                                Toast.makeText(context, "Erro ao deletar tarefa", Toast.LENGTH_SHORT).show()
+                            is TarefasEvents.LoginSuccessfully ->
+                                if (event.isManager){
+                                    navHostController.navigate (
+                                        Route.CreateDeleteTarefa.route
+                                    )
+                                }
+                                else{
+                                    navHostController.navigate (
+                                        "${Route.Tarefas.route}/${event.cdFuncionario}"
+                                    )
+                                }
+
+                            TarefasEvents.LoginFailed -> Toast.makeText(context, "Falha ao fazer Login", Toast.LENGTH_LONG).show()
                             else -> Unit
                         }
                     }
@@ -51,10 +65,7 @@ fun EmployeesContainer(
         }
     }
 
-    EmployeesScreen(
-        state.value.idFuncionario,
-        viewModel::createFuncionario,
-        state.value.departamentos,
-        state.value.cargos
+    LoginScreen(
+        viewModel::login,
     )
 }

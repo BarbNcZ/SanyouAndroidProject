@@ -1,4 +1,4 @@
-package com.androidestudos.fiapchallange.ui.view.pages.tarefas
+package com.androidestudos.fiapchallange.ui.view.pages.tarefa
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
@@ -12,24 +12,22 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.androidestudos.fiapchallange.ui.Route
 import com.androidestudos.fiapchallange.ui.models.TarefasEvents
-import com.androidestudos.fiapchallange.ui.view.pages.createDeleteTarefa.CreateDeleteTarefaScreen
+import com.androidestudos.fiapchallange.ui.view.pages.employees.EmployeesScreen
 import com.androidestudos.fiapchallange.ui.viewmodel.TarefasViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun TarefasContainer(
+fun TarefaContainer(
     viewModel: TarefasViewModel = koinViewModel(),
     navHostController: NavHostController,
-    cdFuncionario: Int? = null
-){
 
-    viewModel.getTarefasByFuncionario(cdFuncionario ?: -1)
+){
 
     val state = viewModel.state.collectAsStateWithLifecycle()
 
 
-    TarefasScreen(
-        state.value.tarefasByFuncionario
+    TarefaScreen(
+        ""
     )
 }

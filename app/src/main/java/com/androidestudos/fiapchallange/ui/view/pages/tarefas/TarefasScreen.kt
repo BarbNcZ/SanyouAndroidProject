@@ -1,41 +1,26 @@
 package com.androidestudos.fiapchallange.ui.view.pages.tarefas
 
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.androidestudos.fiapchallange.data.GetFuncionarioResult
-import com.androidestudos.fiapchallange.data.GetTarefasResult
-import com.androidestudos.fiapchallange.data.GetTipoTarefaResult
-import com.androidestudos.fiapchallange.ui.view.pages.CreateTarefasScreen
-import com.androidestudos.fiapchallange.ui.view.pages.DeleteTarefaScreen
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.androidestudos.fiapchallange.data.GetTarefaResult
 
 @Composable
 fun TarefasScreen(
-    goToEmployeesScreen: () -> Unit,
-    idTarefa: Int,
-    tiposTarefa: List<GetTipoTarefaResult>,
-    tarefas: List<GetTarefasResult>,
-    criarTarefa: (Int, Int, String) -> Unit,
-    deleteTarefa: (Int) -> Unit,
-    funcionarios: List<GetFuncionarioResult>
+    tarefas: List<GetTarefaResult>
 ) {
-
-    CreateTarefasScreen(
-        criarTarefa,
-        idTarefa,
-        tiposTarefa,
-        funcionarios
-    )
-
-    DeleteTarefaScreen(
-        deleteTarefa,
-        tarefas
-    )
-
-    Button(onClick = {
-        goToEmployeesScreen()
-    }) {
-        Text("Criar Funcionario")
+    if (tarefas.isNotEmpty()){
+        LazyColumn(Modifier.height(1080.dp)) {
+            items(tarefas.size) { index ->
+                val tarefa = tarefas[index]
+                Text("${tarefa.dsTarefas} - ${tarefa.dsTipoTarefa}")
+            }
+        }
     }
-
+    else{
+        Text("Nenhuma tarefa para este funcionario")
+    }
 }

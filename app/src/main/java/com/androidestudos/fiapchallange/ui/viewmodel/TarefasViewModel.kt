@@ -1,12 +1,16 @@
 package com.androidestudos.fiapchallange.ui.viewmodel
 
+import androidx.compose.ui.text.toUpperCase
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.androidestudos.fiapchallange.data.GetCargoResult
 import com.androidestudos.fiapchallange.data.GetDepartamentoResult
 import com.androidestudos.fiapchallange.data.GetFuncionarioResult
+import com.androidestudos.fiapchallange.data.GetTarefaResult
 import com.androidestudos.fiapchallange.data.GetTarefasResult
 import com.androidestudos.fiapchallange.data.GetTipoTarefaResult
+import com.androidestudos.fiapchallange.data.LoginResult
+import com.androidestudos.fiapchallange.data.User
 import com.androidestudos.fiapchallange.repository.TarefasRepository
 import com.androidestudos.fiapchallange.ui.models.TarefasEvents
 import com.androidestudos.fiapchallange.ui.models.TarefasState
@@ -23,6 +27,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import org.apache.commons.codec.binary.Hex
+import org.apache.commons.codec.digest.DigestUtils
+import java.util.Locale
 
 class TarefasViewModel(
     val repository: TarefasRepository
@@ -76,6 +83,55 @@ class TarefasViewModel(
             _state.value = _state.value.copy(
                 tarefas = tarefas
             )
+        }
+    }
+
+    fun getTarefasByFuncionario(cdFuncionario: Int) {
+        viewModelScope.launch {
+            val mapper: TarefaMapper = TarefaMapper()
+            val tarefa: List<GetTarefaResult> =
+                mapper.fromGetTarefaResultListToListOfGetTarefaResult(
+                    repository.getTarefasByFuncionario(cdFuncionario).last()?.tarefas ?: arrayOf()
+                )
+            _state.value = _state.value.copy(
+                tarefasByFuncionario = tarefa
+            )
+        }
+    }
+
+    private fun getTarefa(cdTarefa: Int) {
+        viewModelScope.launch {
+            val tarefa = repository.getTarefa(cdTarefa)
+            _state.value = _state.value.copy(
+                tarefa = tarefa.last() ?: GetTarefaResult("","")
+            )
+        }
+    }
+
+    fun login(email: String, password: String) {
+        viewModelScope.launch {
+            val user = repository.login(
+                User(
+                    email,
+                    String(Hex.encodeHex(DigestUtils.md5(password))).toUpperCase(Locale.getDefault())
+                )
+            )
+            val userResult = user.last() ?: LoginResult(-1,"", "", "")
+            _state.value = _state.value.copy(
+                user = userResult
+            )
+            if (userResult.cdFuncionario > 0){
+                _event.send(
+                    TarefasEvents.LoginSuccessfully(
+                        userResult.cdFuncionario,
+                        userResult.isManager()
+                    )
+                )
+            }
+            else{
+                _event.send(TarefasEvents.LoginFailed)
+            }
+
         }
     }
 

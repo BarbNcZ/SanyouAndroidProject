@@ -1,5 +1,6 @@
 package com.androidestudos.fiapchallange.network
 
+import android.os.UserHandle
 import com.androidestudos.fiapchallange.data.CreateFuncionarioResult
 import com.androidestudos.fiapchallange.data.CreateTarefaResult
 import com.androidestudos.fiapchallange.data.DeleteTarefasResult
@@ -8,11 +9,17 @@ import com.androidestudos.fiapchallange.data.GetCargoResultList
 import com.androidestudos.fiapchallange.data.GetDepartamentoResult
 import com.androidestudos.fiapchallange.data.GetDepartamentoResultList
 import com.androidestudos.fiapchallange.data.GetFuncionarioResultList
+import com.androidestudos.fiapchallange.data.GetTarefaResult
+import com.androidestudos.fiapchallange.data.GetTarefaResultList
 import com.androidestudos.fiapchallange.data.GetTarefasResultList
 import com.androidestudos.fiapchallange.data.GetTipoTarefaResultList
+import com.androidestudos.fiapchallange.data.LoginResult
+import com.androidestudos.fiapchallange.data.User
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
@@ -51,5 +58,20 @@ interface APIServer {
         @Path("ds_email") dsEmail: String,
         @Path("nm_funcionario") nmFuncionario: String
     ): Response<CreateFuncionarioResult>
+
+    @GET("/tarefa/{cd_tarefas}")
+    suspend fun getTarefa(
+        @Path("cd_tarefas") cdTarefas: Int
+    ): Response<GetTarefaResult>
+
+    @POST("/login/")
+    suspend fun login(
+        @Body user: User
+    ): Response<LoginResult>
+
+    @GET("/tarefasbyfuncionario/{cd_funcionario}")
+    suspend fun getTarefasByFuncionario(
+        @Path("cd_funcionario") cdFuncionario: Int
+    ): Response<GetTarefaResultList>
 
 }

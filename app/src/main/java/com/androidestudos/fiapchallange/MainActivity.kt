@@ -48,9 +48,20 @@ class MainActivity : ComponentActivity() {
                     // Hide TopBar
                     topBarState.value = false
                 }
+
+                Constants.Ui.CREATE_DELETE_TAREFA_ROUTE_ID -> {
+                    // Hide TopBar
+                    topBarState.value = false
+                }
+
                 Constants.Ui.EMPLOYEES_ROUTE_ID -> {
                     // Show TopBar
                     topBarState.value = true
+                }
+
+                Constants.Ui.LOGIN_ROUTE_ID -> {
+                    // Hide TopBar
+                    topBarState.value = false
                 }
             }
 

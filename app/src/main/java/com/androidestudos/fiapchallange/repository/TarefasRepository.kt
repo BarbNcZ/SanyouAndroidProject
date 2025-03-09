@@ -7,8 +7,12 @@ import com.androidestudos.fiapchallange.data.DeleteTarefasResult
 import com.androidestudos.fiapchallange.data.GetCargoResultList
 import com.androidestudos.fiapchallange.data.GetDepartamentoResultList
 import com.androidestudos.fiapchallange.data.GetFuncionarioResultList
+import com.androidestudos.fiapchallange.data.GetTarefaResult
+import com.androidestudos.fiapchallange.data.GetTarefaResultList
 import com.androidestudos.fiapchallange.data.GetTarefasResultList
 import com.androidestudos.fiapchallange.data.GetTipoTarefaResultList
+import com.androidestudos.fiapchallange.data.LoginResult
+import com.androidestudos.fiapchallange.data.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -54,6 +58,41 @@ class TarefasRepository (
             emit(
                 withContext(Dispatchers.IO) {
                     dataSource.getTarefas()
+                }
+            )
+        }
+    }
+
+    fun getTarefa(cdTarefa: Int) :Flow<GetTarefaResult?> {
+
+        return flow {
+
+            emit(
+                withContext(Dispatchers.IO) {
+                    dataSource.getTarefa(cdTarefa)
+                }
+            )
+        }
+    }
+
+    fun getTarefasByFuncionario(cdFuncionario: Int) :Flow<GetTarefaResultList?> {
+
+        return flow {
+
+            emit(
+                withContext(Dispatchers.IO) {
+                    dataSource.getTarefaByFuncionario(cdFuncionario)
+                }
+            )
+        }
+    }
+
+    fun login(user: User) :Flow<LoginResult?> {
+
+        return flow {
+            emit(
+                withContext(Dispatchers.IO) {
+                    dataSource.login(user)
                 }
             )
         }

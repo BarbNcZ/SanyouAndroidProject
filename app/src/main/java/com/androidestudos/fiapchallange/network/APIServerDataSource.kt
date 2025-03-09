@@ -7,8 +7,12 @@ import com.androidestudos.fiapchallange.data.DeleteTarefasResult
 import com.androidestudos.fiapchallange.data.GetCargoResultList
 import com.androidestudos.fiapchallange.data.GetDepartamentoResultList
 import com.androidestudos.fiapchallange.data.GetFuncionarioResultList
+import com.androidestudos.fiapchallange.data.GetTarefaResult
+import com.androidestudos.fiapchallange.data.GetTarefaResultList
 import com.androidestudos.fiapchallange.data.GetTarefasResultList
 import com.androidestudos.fiapchallange.data.GetTipoTarefaResultList
+import com.androidestudos.fiapchallange.data.LoginResult
+import com.androidestudos.fiapchallange.data.User
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -73,6 +77,61 @@ class APIServerDataSource(private val api: APIServer) {
 
     }
 
+    suspend fun getTarefaByFuncionario(cdFuncionario: Int): GetTarefaResultList? {
+
+        return kotlin.runCatching{
+            val result = api.getTarefasByFuncionario(cdFuncionario)
+            if (result.isSuccessful){
+                result.body()
+            }
+            else {
+                throw Exception("Erro desconhecido")
+            }
+
+        } .getOrElse{ e ->
+            Log.e(this::class.java.simpleName, "Falha ao buscar tarefas do funcionario ${e.message}")
+            null
+        }
+
+    }
+
+    suspend fun getTarefa(cdTarefa: Int): GetTarefaResult? {
+
+        return kotlin.runCatching{
+            val result = api.getTarefa(cdTarefa)
+            if (result.isSuccessful){
+                result.body()
+            }
+            else {
+                throw Exception("Erro desconhecido")
+            }
+
+        } .getOrElse{ e ->
+            Log.e(this::class.java.simpleName, "Falha ao buscar tarefa ${e.message}")
+            null
+        }
+
+    }
+
+
+    suspend fun login(user: User): LoginResult? {
+
+        return kotlin.runCatching{
+            val result = api.login(user)
+            if (result.isSuccessful){
+                result.body()
+            }
+            else {
+                throw Exception("Erro desconhecido")
+            }
+
+        } .getOrElse{ e ->
+            Log.e(this::class.java.simpleName, "Falha ao fazer login ${e.message}")
+            null
+        }
+
+    }
+
     suspend fun deleteTarefa(
         cdTarefa: Int
     ): DeleteTarefasResult? {
@@ -116,7 +175,6 @@ class APIServerDataSource(private val api: APIServer) {
 
     }
 
-
     suspend fun getCargo(): GetCargoResultList? {
 
         return kotlin.runCatching{
@@ -152,7 +210,6 @@ class APIServerDataSource(private val api: APIServer) {
         }
 
     }
-
 
     suspend fun getDepartamento(): GetDepartamentoResultList? {
 
