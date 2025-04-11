@@ -73,5 +73,4 @@ interface APIServer {
     suspend fun getTarefasByFuncionario(
         @Path("cd_funcionario") cdFuncionario: Int
     ): Response<GetTarefaResultList>
-
 }

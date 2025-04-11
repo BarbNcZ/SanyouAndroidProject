@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -12,10 +11,12 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.androidestudos.fiapchallange.ui.view.pages.createDeleteTarefa.CreateDeleteTarefaContainer
-import com.androidestudos.fiapchallange.ui.view.pages.employees.EmployeesContainer
+import com.androidestudos.fiapchallange.ui.view.pages.createTarefa.CreateTaskContainer
+import com.androidestudos.fiapchallange.ui.view.pages.createemployees.CreateEmployeeContainer
+import com.androidestudos.fiapchallange.ui.view.pages.deleteTarefa.DeleteTaskContainer
 import com.androidestudos.fiapchallange.ui.view.pages.login.LoginContainer
-import com.androidestudos.fiapchallange.ui.view.pages.tarefas.TarefasContainer
+import com.androidestudos.fiapchallange.ui.view.pages.menu.MenuContainer
+import com.androidestudos.fiapchallange.ui.view.pages.tarefas.TasksContainer
 import com.androidestudos.fiapchallange.utils.Constants
 
 @Composable
@@ -31,18 +32,18 @@ fun NavGraph(
             StringBuilder().apply {
                 append("${Route.Tarefas.route}/")
                 append(
-                    "{${Constants.Ui.TAREFAS_CD_FUNCIONARIO_ARGUMENT}}"
+                    "{${Constants.Ui.TASKS_EMPLOYEE_ID_ARGUMENT}}"
                 )
             }.toString(),
-            listOf(navArgument(Constants.Ui.TAREFAS_CD_FUNCIONARIO_ARGUMENT){type = NavType.IntType})
+            listOf(navArgument(Constants.Ui.TASKS_EMPLOYEE_ID_ARGUMENT){type = NavType.IntType})
 
 
         ) { stackEntry ->
-            val cdFuncionario = stackEntry.arguments?.getInt(Constants.Ui.TAREFAS_CD_FUNCIONARIO_ARGUMENT)
+            val cdFuncionario = stackEntry.arguments?.getInt(Constants.Ui.TASKS_EMPLOYEE_ID_ARGUMENT)
             title.value = "Tarefas"
             LazyColumn(modifier = Modifier.padding(innerPaddings)) {
                 item {
-                    TarefasContainer(navHostController = navController, cdFuncionario = cdFuncionario)
+                    TasksContainer(navHostController = navController, cdFuncionario = cdFuncionario)
                 }
             }
         }
@@ -51,16 +52,34 @@ fun NavGraph(
             title.value = "Funcionarios"
             LazyColumn(modifier = Modifier.padding(innerPaddings)) {
                 item {
-                    EmployeesContainer()
+                    CreateEmployeeContainer()
                 }
             }
         }
 
-        composable(Route.CreateDeleteTarefa.route) {
-            title.value = "Create or Delete Tarefa"
+        composable(Route.Menu.route) {
+            title.value = "Menu"
             LazyColumn(modifier = Modifier.padding(innerPaddings)) {
                 item {
-                    CreateDeleteTarefaContainer(navHostController = navController)
+                    MenuContainer(navHostController = navController)
+                }
+            }
+        }
+
+        composable(Route.CreateTarefa.route) {
+            title.value = "Criar Tarefa"
+            LazyColumn(modifier = Modifier.padding(innerPaddings)) {
+                item {
+                    CreateTaskContainer(navHostController = navController)
+                }
+            }
+        }
+
+        composable(Route.DeleteTarefa.route) {
+            title.value = "Deletar Tarefa"
+            LazyColumn(modifier = Modifier.padding(innerPaddings)) {
+                item {
+                    DeleteTaskContainer(navHostController = navController)
                 }
             }
         }

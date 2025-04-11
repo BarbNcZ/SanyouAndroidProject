@@ -1,7 +1,17 @@
 import com.androidestudos.fiapchallange.network.APIServer
 import com.androidestudos.fiapchallange.network.APIServerDataSource
 import com.androidestudos.fiapchallange.network.ErrorInterceptor
-import com.androidestudos.fiapchallange.repository.TarefasRepository
+import com.androidestudos.fiapchallange.repository.DepartmentsRepository
+import com.androidestudos.fiapchallange.repository.EmployeesRepository
+import com.androidestudos.fiapchallange.repository.LoginRepository
+import com.androidestudos.fiapchallange.repository.RolesRepository
+import com.androidestudos.fiapchallange.repository.TasksRepository
+import com.androidestudos.fiapchallange.ui.viewmodel.CreateTarefaViewModel
+import com.androidestudos.fiapchallange.ui.viewmodel.DeleteTarefaViewModel
+import com.androidestudos.fiapchallange.ui.viewmodel.EmployeesViewModel
+import com.androidestudos.fiapchallange.ui.viewmodel.LoginViewModel
+import com.androidestudos.fiapchallange.ui.viewmodel.MenuViewModel
+import com.androidestudos.fiapchallange.ui.viewmodel.TarefaViewModel
 import com.androidestudos.fiapchallange.ui.viewmodel.TarefasViewModel
 import okhttp3.OkHttpClient
 import org.koin.core.module.dsl.viewModel
@@ -15,8 +25,48 @@ val tarefasModulo = module{
         TarefasViewModel(get())
     }
 
+    viewModel {
+        TarefaViewModel(get())
+    }
+
+    viewModel {
+        LoginViewModel(get())
+    }
+
+    viewModel {
+        EmployeesViewModel(get(), get(), get())
+    }
+
+    viewModel {
+        CreateTarefaViewModel(get(), get())
+    }
+
+    viewModel {
+        DeleteTarefaViewModel(get(), get())
+    }
+
+    viewModel {
+        MenuViewModel()
+    }
+
     single {
-        TarefasRepository(get())
+        TasksRepository(get())
+    }
+
+    single {
+        RolesRepository(get())
+    }
+
+    single {
+        DepartmentsRepository(get())
+    }
+
+    single {
+        LoginRepository(get())
+    }
+
+    single {
+        EmployeesRepository(get())
     }
 
     single {
