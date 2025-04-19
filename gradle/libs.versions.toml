@@ -16,6 +16,7 @@ koin = "4.0.0"
 lifecycleRuntimeComposeAndroid = "2.8.7"
 navigationCompose = "2.8.8"
 commonsCodec = "1.18.0"
+lottie = "6.6.6"
 
 
 [libraries]
@@ -42,6 +43,7 @@ koinAndroid = { group = "io.insert-koin", name = "koin-android", version.ref = "
 koinCompose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 commons-codec = { group = "commons-codec", name = "commons-codec", version.ref = "commonsCodec" }
 androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
+airbnb-lottie = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 
 
 [plugins]

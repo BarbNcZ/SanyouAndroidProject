@@ -27,11 +27,13 @@ import retrofit2.http.Path
 
 interface APIServer {
 
-    @PUT("/createtarefa/{cd_tipo_tarefa}/{ds_tarefas}/{cd_funcionario}")
+    @PUT("/createtarefa/{cd_tipo_tarefa}/{ds_tarefas}/{cd_funcionario}/{nr_dificuldade}/{nr_tempo}")
     suspend fun createTarefa(
         @Path("cd_tipo_tarefa") cdTipoTarefa: Int,
         @Path("ds_tarefas") dsTarefas: String,
-        @Path("cd_funcionario") cdFuncioanrio: Int
+        @Path("cd_funcionario") cdFuncioanrio: Int,
+        @Path("nr_dificuldade") estimation: Int,
+        @Path("nr_tempo") time: Long
     ): Response<CreateTarefaResult>
 
     @GET("/tipotarefa")

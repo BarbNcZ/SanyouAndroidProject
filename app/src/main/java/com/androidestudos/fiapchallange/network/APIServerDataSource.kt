@@ -22,11 +22,13 @@ class APIServerDataSource(private val api: APIServer) {
     suspend fun createTarefa(
         cdTipoTarefa: Int,
         cdFuncionario: Int,
-        dsTarefas: String
+        dsTarefas: String,
+        estimation: Int,
+        time: Long
     ): CreateTarefaResult? {
 
         return kotlin.runCatching{
-            val result = api.createTarefa(cdTipoTarefa, dsTarefas, cdFuncionario )
+            val result = api.createTarefa(cdTipoTarefa, dsTarefas, cdFuncionario, estimation, time)
             if (result.isSuccessful){
                 result.body()
             }

@@ -19,13 +19,15 @@ class TasksRepository (
     fun createTask(
         taskTypeId: Int,
         employeeId: Int,
-        task: String
+        task: String,
+        estimation: Int,
+        time: Long
     ) : Flow<CreateTarefaResult?> {
 
         return flow {
 
             emit(withContext(Dispatchers.IO) {
-                dataSource.createTarefa(taskTypeId, employeeId , task)
+                dataSource.createTarefa(taskTypeId, employeeId , task, estimation, time)
 
             })
 

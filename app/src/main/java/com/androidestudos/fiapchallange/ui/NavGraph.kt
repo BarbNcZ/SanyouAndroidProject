@@ -27,6 +27,7 @@ fun NavGraph(
     innerPaddings: PaddingValues ,
     navController: NavHostController,
     startDestination: String = Constants.Ui.LOGIN_ROUTE_ID
+    //startDestination: String = Constants.Ui.CREATE_TASK_ROUTE_ID
 ){
     NavHost(navController, startDestination){
         composable(
