@@ -4,13 +4,16 @@ import com.androidestudos.fiapchallange.network.ErrorInterceptor
 import com.androidestudos.fiapchallange.repository.DepartmentsRepository
 import com.androidestudos.fiapchallange.repository.EmployeesRepository
 import com.androidestudos.fiapchallange.repository.LoginRepository
+import com.androidestudos.fiapchallange.repository.RankingRepository
 import com.androidestudos.fiapchallange.repository.RolesRepository
 import com.androidestudos.fiapchallange.repository.TasksRepository
 import com.androidestudos.fiapchallange.ui.viewmodel.CreateTarefaViewModel
+import com.androidestudos.fiapchallange.ui.viewmodel.DeleteFuncionarioViewModel
 import com.androidestudos.fiapchallange.ui.viewmodel.DeleteTarefaViewModel
 import com.androidestudos.fiapchallange.ui.viewmodel.EmployeesViewModel
 import com.androidestudos.fiapchallange.ui.viewmodel.LoginViewModel
 import com.androidestudos.fiapchallange.ui.viewmodel.MenuViewModel
+import com.androidestudos.fiapchallange.ui.viewmodel.RankingViewModel
 import com.androidestudos.fiapchallange.ui.viewmodel.TarefaViewModel
 import com.androidestudos.fiapchallange.ui.viewmodel.TarefasViewModel
 import okhttp3.OkHttpClient
@@ -46,7 +49,15 @@ val tarefasModulo = module{
     }
 
     viewModel {
+        DeleteFuncionarioViewModel(get())
+    }
+
+    viewModel {
         MenuViewModel()
+    }
+
+    viewModel {
+        RankingViewModel(get())
     }
 
     single {
@@ -63,6 +74,10 @@ val tarefasModulo = module{
 
     single {
         LoginRepository(get())
+    }
+
+    single {
+        RankingRepository(get())
     }
 
     single {

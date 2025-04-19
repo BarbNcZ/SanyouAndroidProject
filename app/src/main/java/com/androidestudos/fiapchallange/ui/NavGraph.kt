@@ -13,9 +13,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.androidestudos.fiapchallange.ui.view.pages.createTarefa.CreateTaskContainer
 import com.androidestudos.fiapchallange.ui.view.pages.createemployees.CreateEmployeeContainer
+import com.androidestudos.fiapchallange.ui.view.pages.deleteFuncionario.DeleteFuncionarioContainer
 import com.androidestudos.fiapchallange.ui.view.pages.deleteTarefa.DeleteTaskContainer
 import com.androidestudos.fiapchallange.ui.view.pages.login.LoginContainer
 import com.androidestudos.fiapchallange.ui.view.pages.menu.MenuContainer
+import com.androidestudos.fiapchallange.ui.view.pages.ranking.RankingContainer
 import com.androidestudos.fiapchallange.ui.view.pages.tarefas.TasksContainer
 import com.androidestudos.fiapchallange.utils.Constants
 
@@ -57,6 +59,15 @@ fun NavGraph(
             }
         }
 
+        composable(Route.Ranking.route) {
+            title.value = "Ranking"
+            LazyColumn(modifier = Modifier.padding(innerPaddings)) {
+                item {
+                    RankingContainer(navHostController = navController)
+                }
+            }
+        }
+
         composable(Route.Menu.route) {
             title.value = "Menu"
             LazyColumn(modifier = Modifier.padding(innerPaddings)) {
@@ -80,6 +91,15 @@ fun NavGraph(
             LazyColumn(modifier = Modifier.padding(innerPaddings)) {
                 item {
                     DeleteTaskContainer(navHostController = navController)
+                }
+            }
+        }
+
+        composable(Route.DeleteFuncionario.route) {
+            title.value = "Deletar Funcionario"
+            LazyColumn(modifier = Modifier.padding(innerPaddings)) {
+                item {
+                    DeleteFuncionarioContainer(navHostController = navController)
                 }
             }
         }

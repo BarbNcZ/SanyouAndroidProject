@@ -84,6 +84,18 @@ class MainActivity : ComponentActivity() {
                     menuVisible.value = true
                 }
 
+                Constants.Ui.DELETE_FUNCIONARIO_ROUTE_ID -> {
+                    // Hide TopBar
+                    topBarState.value = true
+                    menuVisible.value = true
+                }
+
+                Constants.Ui.RANKING_ROUTE_ID -> {
+                    // Hide TopBar
+                    topBarState.value = true
+                    menuVisible.value = true
+                }
+
                 Constants.Ui.MENU_ROUTE_ID -> {
                     // Hide TopBar
                     topBarState.value = false
@@ -109,8 +121,6 @@ class MainActivity : ComponentActivity() {
             val topBarTitle = remember {
                 mutableStateOf("")
             }
-
-
 
             FiapChallangeTheme {
                 Scaffold(modifier = Modifier.fillMaxSize(), topBar = {

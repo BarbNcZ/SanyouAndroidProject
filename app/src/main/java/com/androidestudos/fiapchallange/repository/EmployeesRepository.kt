@@ -1,6 +1,8 @@
 package com.androidestudos.fiapchallange.repository
 
 import com.androidestudos.fiapchallange.data.CreateFuncionarioResult
+import com.androidestudos.fiapchallange.data.DeleteFuncionarioResult
+import com.androidestudos.fiapchallange.data.DeleteTarefasResult
 import com.androidestudos.fiapchallange.data.GetFuncionarioResultList
 import com.androidestudos.fiapchallange.network.APIServerDataSource
 import kotlinx.coroutines.Dispatchers
@@ -39,5 +41,20 @@ class EmployeesRepository (
                 }
             )
         }
+    }
+
+    fun deleteFuncionario(
+        cdFuncionario: Int
+    ) : Flow<DeleteFuncionarioResult?> {
+
+        return flow {
+
+            emit(withContext(Dispatchers.IO) {
+                dataSource.deleteFuncionario(cdFuncionario)
+
+            })
+
+        }
+
     }
 }

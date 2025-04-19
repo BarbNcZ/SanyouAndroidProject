@@ -22,6 +22,12 @@ fun MenuContainer(
         },
         goToDeleteTaskScreen = {
             navHostController.navigate(Route.DeleteTarefa.route)
+        },
+        goToDeleteFuncionarioScreen = {
+            navHostController.navigate(Route.DeleteFuncionario.route)
+        },
+        goToRankingScreen = {
+            navHostController.navigate(Route.Ranking.route)
         }
     )
 }

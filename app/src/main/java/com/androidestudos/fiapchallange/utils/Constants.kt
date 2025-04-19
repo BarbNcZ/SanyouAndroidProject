@@ -9,6 +9,7 @@ object Constants {
         const val LOGIN_ROUTE_ID: String = "LoginRouteId"
         const val CREATE_TASK_ROUTE_ID: String = "CreateTaskRouteId"
         const val DELETE_TASK_ROUTE_ID: String = "DeleteTaskRouteId"
+        const val DELETE_FUNCIONARIO_ROUTE_ID: String = "DeleteFuncionarioRouteId"
         const val TASKS_EMPLOYEE_ID_ARGUMENT: String = "TasksEmployeeIdArgument"
     }
 }

@@ -43,6 +43,7 @@ fun CreateTaskScreen(
 
     TextField(text, {text = it})
 
+
     TaskTypesDropDownMenu(
 
         selectedValue = "Nenhum",
@@ -54,15 +55,18 @@ fun CreateTaskScreen(
 
     )
 
+
+    var selected = remember { mutableStateOf("Nenhuma") }
+
+
     EmployeesDropDownMenu(
 
-        selectedValue = "Nenhum",
+        selectedValue = selected,
         options = employees,
         label = "Funcionario",
         { cdFuncionario ->
             employeeId = cdFuncionario
         }
-
     )
 
     //botao de criar tarefa

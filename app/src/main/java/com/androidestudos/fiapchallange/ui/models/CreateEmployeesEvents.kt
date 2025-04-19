@@ -1,5 +1,5 @@
 package com.androidestudos.fiapchallange.ui.models
 
-sealed class EmployeesEvents {
+sealed class CreateEmployeesEvents {
 
 }

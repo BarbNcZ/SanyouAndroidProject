@@ -9,6 +9,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,14 +20,13 @@ import com.androidestudos.fiapchallange.data.GetFuncionarioResult
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EmployeesDropDownMenu(
-    selectedValue: String,
+    selectedValue: MutableState<String>,
     options: List<GetFuncionarioResult>,
     label: String,
     onValueChangedEvent: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var selected by remember { mutableStateOf(selectedValue) }
 
 
     ExposedDropdownMenuBox(
@@ -36,7 +36,7 @@ fun EmployeesDropDownMenu(
     ) {
         OutlinedTextField(
             readOnly = true,
-            value = selected,
+            value = selectedValue.value,
             onValueChange = {},
             label = { Text(text = label) },
             trailingIcon = {
@@ -54,7 +54,7 @@ fun EmployeesDropDownMenu(
                     text = { Text(text = "${employee.nmFuncionario} (${employee.dsCargo} - ${employee.nmDepto})") },
                     onClick = {
                         expanded = false
-                        selected = "${employee.nmFuncionario} (${employee.dsCargo} - ${employee.nmDepto})"
+                        selectedValue.value = "${employee.nmFuncionario} (${employee.dsCargo} - ${employee.nmDepto})"
                         onValueChangedEvent(employee.cdFuncionario)
                     }
                 )

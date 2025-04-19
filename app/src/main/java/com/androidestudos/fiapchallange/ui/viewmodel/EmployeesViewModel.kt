@@ -7,9 +7,8 @@ import com.androidestudos.fiapchallange.data.GetDepartamentoResult
 import com.androidestudos.fiapchallange.repository.DepartmentsRepository
 import com.androidestudos.fiapchallange.repository.EmployeesRepository
 import com.androidestudos.fiapchallange.repository.RolesRepository
-import com.androidestudos.fiapchallange.repository.TasksRepository
-import com.androidestudos.fiapchallange.ui.models.EmployeesEvents
-import com.androidestudos.fiapchallange.ui.models.EmployeesState
+import com.androidestudos.fiapchallange.ui.models.CreateEmployeesEvents
+import com.androidestudos.fiapchallange.ui.models.CreateEmployeesState
 import com.androidestudos.fiapchallange.utils.RoleMapper
 import com.androidestudos.fiapchallange.utils.DepartmentMapper
 import kotlinx.coroutines.channels.Channel
@@ -26,10 +25,10 @@ class EmployeesViewModel(
     val departmentsRepository: DepartmentsRepository,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<EmployeesState>(EmployeesState())
-    val state: StateFlow<EmployeesState> = _state
-    private val _event = Channel<EmployeesEvents>()
-    val event: Flow<EmployeesEvents> = _event.receiveAsFlow()
+    private val _state = MutableStateFlow<CreateEmployeesState>(CreateEmployeesState())
+    val state: StateFlow<CreateEmployeesState> = _state
+    private val _event = Channel<CreateEmployeesEvents>()
+    val event: Flow<CreateEmployeesEvents> = _event.receiveAsFlow()
 
     init {
         getCargo()

@@ -16,7 +16,9 @@ fun TasksScreen(
         LazyColumn(Modifier.height(1080.dp)) {
             items(tasks.size) { index ->
                 val task = tasks[index]
-                Text("${task.dsTarefas} - ${task.dsTipoTarefa}")
+                Text(
+                    "${task.dsTarefas} - ${task.dsTipoTarefa}"
+                )
             }
         }
     }

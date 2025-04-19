@@ -3,6 +3,7 @@ package com.androidestudos.fiapchallange.network
 import android.util.Log
 import com.androidestudos.fiapchallange.data.CreateFuncionarioResult
 import com.androidestudos.fiapchallange.data.CreateTarefaResult
+import com.androidestudos.fiapchallange.data.DeleteFuncionarioResult
 import com.androidestudos.fiapchallange.data.DeleteTarefasResult
 import com.androidestudos.fiapchallange.data.GetCargoResultList
 import com.androidestudos.fiapchallange.data.GetDepartamentoResultList
@@ -113,7 +114,6 @@ class APIServerDataSource(private val api: APIServer) {
 
     }
 
-
     suspend fun login(user: User): LoginResult? {
 
         return kotlin.runCatching{
@@ -147,6 +147,27 @@ class APIServerDataSource(private val api: APIServer) {
 
         } .getOrElse{ e ->
             Log.e(this::class.java.simpleName, "Falha ao deletar tarefa ${e.message}")
+            null
+        }
+
+    }
+
+
+    suspend fun deleteFuncionario(
+        cdFuncionario: Int
+    ): DeleteFuncionarioResult? {
+
+        return kotlin.runCatching{
+            val result = api.deleteFuncionario(cdFuncionario)
+            if (result.isSuccessful){
+                result.body()
+            }
+            else {
+                throw Exception("Erro desconhecido")
+            }
+
+        } .getOrElse{ e ->
+            Log.e(this::class.java.simpleName, "Falha ao deletar funcionario ${e.message}")
             null
         }
 
@@ -213,8 +234,25 @@ class APIServerDataSource(private val api: APIServer) {
 
     suspend fun getDepartamento(): GetDepartamentoResultList? {
 
-        return kotlin.runCatching{
+        return kotlin.runCatching {
             val result = api.getDepartamentos()
+            if (result.isSuccessful) {
+                result.body()
+            } else {
+                throw Exception("Erro desconhecido")
+            }
+
+        }.getOrElse { e ->
+            Log.e(this::class.java.simpleName, "Falha ao buscar departamentos ${e.message}")
+            null
+        }
+
+    }
+
+    suspend fun getRanking(): GetFuncionarioResultList? {
+
+        return kotlin.runCatching{
+            val result = api.getRanking()
             if (result.isSuccessful){
                 result.body()
             }
@@ -223,7 +261,7 @@ class APIServerDataSource(private val api: APIServer) {
             }
 
         } .getOrElse{ e ->
-            Log.e(this::class.java.simpleName, "Falha ao buscar departamentos ${e.message}")
+            Log.e(this::class.java.simpleName, "Falha ao buscar o ranking ${e.message}")
             null
         }
 

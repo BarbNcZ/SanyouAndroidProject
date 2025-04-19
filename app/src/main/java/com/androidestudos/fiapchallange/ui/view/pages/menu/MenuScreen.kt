@@ -11,13 +11,15 @@ import com.androidestudos.fiapchallange.data.GetTipoTarefaResult
 fun MenuScreen(
     goToEmployeesScreen: () -> Unit,
     goToCreateTaskScreen: () -> Unit,
-    goToDeleteTaskScreen: () -> Unit
+    goToDeleteTaskScreen: () -> Unit,
+    goToDeleteFuncionarioScreen: () -> Unit,
+    goToRankingScreen: () -> Unit
 ) {
 
     Button(onClick = {
-        goToEmployeesScreen()
+        goToRankingScreen()
     }) {
-        Text("Criar Funcionario")
+        Text("Ranking")
     }
 
     Button(onClick = {
@@ -33,9 +35,14 @@ fun MenuScreen(
     }
 
     Button(onClick = {
-//        goToRankingScreen()
+        goToEmployeesScreen()
     }) {
-        Text("Ranking")
+        Text("Criar Funcionario")
     }
 
+    Button(onClick = {
+        goToDeleteFuncionarioScreen()
+    }) {
+        Text("Deletar Funcionario")
+    }
 }
