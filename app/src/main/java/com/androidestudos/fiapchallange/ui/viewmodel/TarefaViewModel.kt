@@ -27,7 +27,7 @@ class TarefaViewModel(
         viewModelScope.launch {
             val tarefa = repository.getTask(cdTarefa)
             _state.value = _state.value.copy(
-                tarefa = tarefa.last() ?: GetTarefaResult("","")
+                tarefa = tarefa.last() ?: GetTarefaResult(-1, "","", 0, 0, 0)
             )
         }
     }

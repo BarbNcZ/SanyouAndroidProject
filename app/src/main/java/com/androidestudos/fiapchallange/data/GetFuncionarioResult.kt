@@ -13,5 +13,7 @@ data class GetFuncionarioResult (
     @SerializedName("ds_cargo")
     val dsCargo: String,
     @SerializedName("nm_funcionario")
-    val nmFuncionario: String
+    val nmFuncionario: String,
+    @SerializedName("nr_pontos")
+    val nrPontos: Int
 )

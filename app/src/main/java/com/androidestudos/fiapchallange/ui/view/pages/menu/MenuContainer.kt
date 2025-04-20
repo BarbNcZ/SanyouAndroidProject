@@ -25,9 +25,6 @@ fun MenuContainer(
         },
         goToDeleteFuncionarioScreen = {
             navHostController.navigate(Route.DeleteFuncionario.route)
-        },
-        goToRankingScreen = {
-            navHostController.navigate(Route.Ranking.route)
         }
     )
 }

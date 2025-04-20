@@ -18,6 +18,8 @@ fun TasksContainer(
     val state = viewModel.state.collectAsStateWithLifecycle()
 
     TasksScreen(
-        state.value.tasksByEmployee
+        cdFuncionario ?: -1,
+        state.value.tasksByEmployee,
+        viewModel::concludeTask
     )
 }

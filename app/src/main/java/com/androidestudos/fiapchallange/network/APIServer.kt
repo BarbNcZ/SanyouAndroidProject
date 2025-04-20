@@ -1,6 +1,7 @@
 package com.androidestudos.fiapchallange.network
 
 import android.os.UserHandle
+import com.androidestudos.fiapchallange.data.ConcluirTarefasResult
 import com.androidestudos.fiapchallange.data.CreateFuncionarioResult
 import com.androidestudos.fiapchallange.data.CreateTarefaResult
 import com.androidestudos.fiapchallange.data.DeleteFuncionarioResult
@@ -41,6 +42,9 @@ interface APIServer {
 
     @DELETE("/deletetarefa/{cd_tarefas}")
     suspend fun deleteTarefa(@Path("cd_tarefas") cdTarefa: Int): Response<DeleteTarefasResult>
+
+    @DELETE("/concluirtarefa/{cd_tarefas}/{cd_funcionario}")
+    suspend fun concluirTarefa(@Path("cd_tarefas") cdTarefa: Int, @Path("cd_funcionario") cdFuncionario: Int): Response<ConcluirTarefasResult>
 
     @DELETE("/deletefuncionario/{cd_funcionario}")
     suspend fun deleteFuncionario(@Path("cd_funcionario") cdFuncionario: Int): Response<DeleteFuncionarioResult>

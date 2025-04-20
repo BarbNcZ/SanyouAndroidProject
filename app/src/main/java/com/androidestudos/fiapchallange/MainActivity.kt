@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -188,6 +189,10 @@ class MainActivity : ComponentActivity() {
             actions = {
 
                 if (menuVisible.value){
+
+                    IconButton(onClick = { navHostController.navigate(Route.Ranking.route) }) {
+                        Icon(Icons.Default.Star, contentDescription = "Ranking")
+                    }
 
                     IconButton(onClick = { expanded = true }) {
                         Icon(Icons.Default.MoreVert, contentDescription = "Menu")

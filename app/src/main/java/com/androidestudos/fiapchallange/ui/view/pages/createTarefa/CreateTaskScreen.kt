@@ -107,7 +107,13 @@ fun CreateTaskScreen(
         }
 
         else{
-            createTask(taskTypeId, employeeId, taskName, estimation.intValue, toTimestamp(hour.intValue, minute.intValue))
+            createTask(
+                taskTypeId,
+                employeeId,
+                taskName,
+                estimation.intValue + (50*(minute.intValue/30).toInt()) + (100*hour.intValue),
+                toTimestamp(hour.intValue, minute.intValue)
+            )
         }
     }
     ) {

@@ -1,5 +1,6 @@
 package com.androidestudos.fiapchallange.repository
 
+import com.androidestudos.fiapchallange.data.ConcluirTarefasResult
 import com.androidestudos.fiapchallange.data.CreateTarefaResult
 import com.androidestudos.fiapchallange.data.DeleteTarefasResult
 import com.androidestudos.fiapchallange.data.GetTarefaResult
@@ -93,8 +94,20 @@ class TasksRepository (
                 dataSource.deleteTarefa(cdTarefa)
 
             })
-
         }
+    }
 
+    fun concludeTask(
+        cdTarefa: Int,
+        cdFuncionario: Int
+    ) : Flow<ConcluirTarefasResult?> {
+
+        return flow {
+
+            emit(withContext(Dispatchers.IO) {
+                dataSource.concluirTarefa(cdTarefa, cdFuncionario)
+
+            })
+        }
     }
 }

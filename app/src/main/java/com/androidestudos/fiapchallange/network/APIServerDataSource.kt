@@ -1,6 +1,7 @@
 package com.androidestudos.fiapchallange.network
 
 import android.util.Log
+import com.androidestudos.fiapchallange.data.ConcluirTarefasResult
 import com.androidestudos.fiapchallange.data.CreateFuncionarioResult
 import com.androidestudos.fiapchallange.data.CreateTarefaResult
 import com.androidestudos.fiapchallange.data.DeleteFuncionarioResult
@@ -152,6 +153,26 @@ class APIServerDataSource(private val api: APIServer) {
             null
         }
 
+    }
+
+    suspend fun concluirTarefa(
+        cdTarefa: Int,
+        cdFuncionario: Int
+    ): ConcluirTarefasResult? {
+
+        return kotlin.runCatching{
+            val result = api.concluirTarefa(cdTarefa, cdFuncionario)
+            if (result.isSuccessful){
+                result.body()
+            }
+            else {
+                throw Exception("Erro desconhecido")
+            }
+
+        } .getOrElse{ e ->
+            Log.e(this::class.java.simpleName, "Falha ao concluir tarefa ${e.message}")
+            null
+        }
     }
 
 

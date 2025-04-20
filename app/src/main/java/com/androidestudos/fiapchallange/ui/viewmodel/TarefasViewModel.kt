@@ -36,4 +36,27 @@ class TarefasViewModel(
             )
         }
     }
+
+    fun concludeTask(task: Int, cdFuncionario: Int) {
+
+        viewModelScope.launch {
+
+            if (cdFuncionario > -1) {
+
+                val result = repository.concludeTask(task, cdFuncionario)
+
+                _event.send(
+                    if (result.last()?.result == true) {
+                        TasksEvents.TaskConcluded
+                    } else {
+                        TasksEvents.TaskNotConcluded
+                    }
+                )
+            }
+            else{
+                _event.send(TasksEvents.TaskNotConcluded)
+
+            }
+        }
+    }
 }

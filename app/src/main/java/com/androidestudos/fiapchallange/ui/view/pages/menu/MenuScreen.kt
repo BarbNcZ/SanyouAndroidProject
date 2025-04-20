@@ -12,15 +12,8 @@ fun MenuScreen(
     goToEmployeesScreen: () -> Unit,
     goToCreateTaskScreen: () -> Unit,
     goToDeleteTaskScreen: () -> Unit,
-    goToDeleteFuncionarioScreen: () -> Unit,
-    goToRankingScreen: () -> Unit
+    goToDeleteFuncionarioScreen: () -> Unit
 ) {
-
-    Button(onClick = {
-        goToRankingScreen()
-    }) {
-        Text("Ranking")
-    }
 
     Button(onClick = {
         goToCreateTaskScreen()
