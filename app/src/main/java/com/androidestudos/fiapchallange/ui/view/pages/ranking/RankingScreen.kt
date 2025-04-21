@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.androidestudos.fiapchallange.data.GetFuncionarioResult
 
 @Composable
@@ -28,7 +29,6 @@ fun RankingScreen (
     if (funcionarios.isNotEmpty()){
         LazyColumn (Modifier.height(1080.dp)
             .fillMaxWidth()
-
 
         ) {
 
@@ -47,15 +47,13 @@ fun RankingScreen (
 
                 usedColors.add(colorIndex)
 
-
-
                 Column {
 
                     Row() {
 
                         Box(modifier = Modifier.weight(2f)) {
                             Icon(
-                                modifier = Modifier.align(Alignment.CenterStart),
+                                modifier = Modifier.align(Alignment.CenterEnd),
                                 imageVector = Icons.Default.Person,
                                 contentDescription = "Avatar"
                             )
@@ -76,20 +74,20 @@ fun RankingScreen (
                                     8 -> Color(android.graphics.Color.parseColor("#a86009"))
                                     else -> Color(android.graphics.Color.parseColor("#5524a3"))
                                 },
-                                text = "${funcionario.nmFuncionario}"
+                                text = "${funcionario.nmFuncionario}",
+                                fontSize = 19.sp
                             )
                         }
 
                         Box(modifier = Modifier.weight(2f)) {
                             Text(
-                                modifier = Modifier.align(Alignment.CenterEnd),
-                                text = "${funcionario.nrPontos}"
+                                modifier = Modifier.align(Alignment.CenterStart),
+                                text = "${funcionario.nrPontos}",
+                                fontSize = 19.sp
                             )
                         }
                     }
-
                     HorizontalDivider()
-
                 }
             }
         }
