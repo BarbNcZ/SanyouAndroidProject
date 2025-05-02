@@ -1,6 +1,5 @@
 package com.androidestudos.fiapchallange.data
 
-import androidx.compose.ui.text.toUpperCase
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 import java.util.Locale
@@ -17,7 +16,7 @@ data class LoginResult (
     val nmFuncionario: String
 ){
     fun isManager() : Boolean {
-        return nmDepto.toUpperCase(Locale.getDefault()) == "operacoes".toUpperCase(Locale.getDefault()) &&
-                dsCargo.toUpperCase(Locale.getDefault()) == "gerente".toUpperCase(Locale.getDefault())
+        return nmDepto.uppercase(Locale.getDefault()) == "operacoes".uppercase(Locale.getDefault()) &&
+                dsCargo.uppercase(Locale.getDefault()) == "gerente".uppercase(Locale.getDefault())
     }
 }

@@ -1,12 +1,14 @@
 import com.androidestudos.fiapchallange.network.APIServer
 import com.androidestudos.fiapchallange.network.APIServerDataSource
 import com.androidestudos.fiapchallange.network.ErrorInterceptor
+import com.androidestudos.fiapchallange.repository.ChartsRepository
 import com.androidestudos.fiapchallange.repository.DepartmentsRepository
 import com.androidestudos.fiapchallange.repository.EmployeesRepository
 import com.androidestudos.fiapchallange.repository.LoginRepository
 import com.androidestudos.fiapchallange.repository.RankingRepository
 import com.androidestudos.fiapchallange.repository.RolesRepository
 import com.androidestudos.fiapchallange.repository.TasksRepository
+import com.androidestudos.fiapchallange.ui.viewmodel.ChartsViewModel
 import com.androidestudos.fiapchallange.ui.viewmodel.CreateTarefaViewModel
 import com.androidestudos.fiapchallange.ui.viewmodel.DeleteFuncionarioViewModel
 import com.androidestudos.fiapchallange.ui.viewmodel.DeleteTarefaViewModel
@@ -60,6 +62,10 @@ val tarefasModulo = module{
         RankingViewModel(get())
     }
 
+    viewModel {
+        ChartsViewModel(get(), get())
+    }
+
     single {
         TasksRepository(get())
     }
@@ -78,6 +84,10 @@ val tarefasModulo = module{
 
     single {
         RankingRepository(get())
+    }
+
+    single {
+        ChartsRepository(get())
     }
 
     single {

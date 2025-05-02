@@ -1,5 +1,6 @@
 package com.androidestudos.fiapchallange.ui
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,6 +12,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.androidestudos.fiapchallange.ui.view.pages.ChartsSamplesScreen
+import com.androidestudos.fiapchallange.ui.view.pages.charts.ChartsContainer
 import com.androidestudos.fiapchallange.ui.view.pages.createTarefa.CreateTaskContainer
 import com.androidestudos.fiapchallange.ui.view.pages.createemployees.CreateEmployeeContainer
 import com.androidestudos.fiapchallange.ui.view.pages.deleteFuncionario.DeleteFuncionarioContainer
@@ -26,14 +29,15 @@ fun NavGraph(
     title: MutableState<String> ,
     innerPaddings: PaddingValues ,
     navController: NavHostController,
-    startDestination: String = Constants.Ui.LOGIN_ROUTE_ID
+    startDestination: String = Constants.Ui.LOGIN_ROUTE_ID,
+    isManager: MutableState<Boolean>,
     //startDestination: String = Constants.Ui.CREATE_TASK_ROUTE_ID
 ){
     NavHost(navController, startDestination){
         composable(
 
             StringBuilder().apply {
-                append("${Route.Tarefas.route}/")
+                append("${Route.TASKS.routeId}/")
                 append(
                     "{${Constants.Ui.TASKS_EMPLOYEE_ID_ARGUMENT}}"
                 )
@@ -44,14 +48,12 @@ fun NavGraph(
         ) { stackEntry ->
             val cdFuncionario = stackEntry.arguments?.getInt(Constants.Ui.TASKS_EMPLOYEE_ID_ARGUMENT)
             title.value = "Tarefas"
-            LazyColumn(modifier = Modifier.padding(innerPaddings)) {
-                item {
-                    TasksContainer(navHostController = navController, cdFuncionario = cdFuncionario)
-                }
+            Column(modifier = Modifier.padding(innerPaddings)) {
+                TasksContainer(navHostController = navController, cdFuncionario = cdFuncionario)
             }
         }
 
-        composable(Route.Employees.route) {
+        composable(Route.EMPLOYEES.routeId) {
             title.value = "Funcionarios"
             LazyColumn(modifier = Modifier.padding(innerPaddings)) {
                 item {
@@ -60,7 +62,7 @@ fun NavGraph(
             }
         }
 
-        composable(Route.Ranking.route) {
+        composable(Route.RANKING.routeId) {
             title.value = "Ranking"
             LazyColumn(modifier = Modifier.padding(innerPaddings)) {
                 item {
@@ -69,7 +71,14 @@ fun NavGraph(
             }
         }
 
-        composable(Route.Menu.route) {
+        composable(Route.CHARTS_SAMPLES.routeId) {
+            title.value = "Charts Samples"
+            Column(modifier = Modifier.padding(innerPaddings)) {
+                ChartsSamplesScreen()
+            }
+        }
+
+        composable(Route.MENU.routeId) {
             title.value = "Menu"
             LazyColumn(modifier = Modifier.padding(innerPaddings)) {
                 item {
@@ -78,7 +87,7 @@ fun NavGraph(
             }
         }
 
-        composable(Route.CreateTarefa.route) {
+        composable(Route.CREATE_TASK.routeId) {
             title.value = "Criar Tarefa"
             LazyColumn(modifier = Modifier.padding(innerPaddings)) {
                 item {
@@ -87,7 +96,7 @@ fun NavGraph(
             }
         }
 
-        composable(Route.DeleteTarefa.route) {
+        composable(Route.DELETE_TASK.routeId) {
             title.value = "Deletar Tarefa"
             LazyColumn(modifier = Modifier.padding(innerPaddings)) {
                 item {
@@ -96,7 +105,7 @@ fun NavGraph(
             }
         }
 
-        composable(Route.DeleteFuncionario.route) {
+        composable(Route.DELETE_EMPLOYEE.routeId) {
             title.value = "Deletar Funcionario"
             LazyColumn(modifier = Modifier.padding(innerPaddings)) {
                 item {
@@ -105,13 +114,23 @@ fun NavGraph(
             }
         }
 
-        composable(Route.Login.route) {
+        composable(Route.LOGIN.routeId) {
             title.value = "Login"
             LazyColumn(modifier = Modifier.padding(innerPaddings)) {
                 item {
-                    LoginContainer(navHostController = navController)
+                    LoginContainer(navHostController = navController, isManager = isManager)
                 }
+            }
+        }
+
+        composable(Route.CHARTS.routeId) {
+            title.value = "Graficos"
+            Column(modifier = Modifier.padding(innerPaddings)) {
+                ChartsContainer(navHostController = navController)
             }
         }
     }
 }
+
+
+

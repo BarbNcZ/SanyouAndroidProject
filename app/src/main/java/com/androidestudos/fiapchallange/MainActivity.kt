@@ -7,41 +7,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.androidestudos.fiapchallange.ui.NavGraph
 import com.androidestudos.fiapchallange.ui.Route
 import com.androidestudos.fiapchallange.ui.theme.FiapChallangeTheme
-import com.androidestudos.fiapchallange.utils.Constants
-import com.androidestudos.fiapchallange.utils.Constants.Ui.CREATE_TASK_ROUTE_ID
-import com.androidestudos.fiapchallange.utils.Constants.Ui.DELETE_TASK_ROUTE_ID
-import com.androidestudos.fiapchallange.utils.Constants.Ui.EMPLOYEES_ROUTE_ID
-import com.androidestudos.fiapchallange.utils.Constants.Ui.LOGIN_ROUTE_ID
-import com.androidestudos.fiapchallange.utils.Constants.Ui.MENU_ROUTE_ID
-import com.androidestudos.fiapchallange.utils.Constants.Ui.RANKING_ROUTE_ID
-import com.androidestudos.fiapchallange.utils.Constants.Ui.TASKS_ROUTE_ID
+import com.androidestudos.fiapchallange.ui.view.atoms.SanyuTopBar
 
 class MainActivity : ComponentActivity() {
 
@@ -55,100 +33,76 @@ class MainActivity : ComponentActivity() {
             navHostController = rememberNavController()
 
             val navBackStackEntry by navHostController.currentBackStackEntryAsState()
-            val topBarState = rememberSaveable() {
+            val topBarState = rememberSaveable {
                 mutableStateOf(false)
             }
 
-            val menuVisible = rememberSaveable() { mutableStateOf(false) }
+            val menuVisible = rememberSaveable { mutableStateOf(false) }
 
-
-            // Control Topbar Back Button visibility
-            when (navBackStackEntry?.destination?.route?.split("/")?.get(0)) {
-
-
-                Constants.Ui.TASKS_ROUTE_ID -> {
-                    // Hide TopBar
-                    topBarState.value = false
-                    menuVisible.value = true
-
-                }
-
-                Constants.Ui.CREATE_TASK_ROUTE_ID -> {
-                    // Hide TopBar
-                    topBarState.value = true
-                    menuVisible.value = true
-                }
-
-                Constants.Ui.DELETE_TASK_ROUTE_ID -> {
-                    // Hide TopBar
-                    topBarState.value = true
-                    menuVisible.value = true
-                }
-
-                Constants.Ui.DELETE_FUNCIONARIO_ROUTE_ID -> {
-                    // Hide TopBar
-                    topBarState.value = true
-                    menuVisible.value = true
-                }
-
-                Constants.Ui.RANKING_ROUTE_ID -> {
-                    // Hide TopBar
-                    topBarState.value = true
-                    menuVisible.value = true
-                }
-
-                Constants.Ui.MENU_ROUTE_ID -> {
-                    // Hide TopBar
-                    topBarState.value = false
-                    menuVisible.value = true
-                }
-
-                Constants.Ui.EMPLOYEES_ROUTE_ID -> {
-                    // Show TopBar
-                    topBarState.value = true
-                    menuVisible.value = true
-                }
-
-                Constants.Ui.LOGIN_ROUTE_ID -> {
-                    // Hide TopBar
-                    topBarState.value = false
-                    route = Constants.Ui.LOGIN_ROUTE_ID
-
-                    menuVisible.value = false
-
-                }
+            val currentRoute = Route.entries.find {
+                it.routeId == navBackStackEntry?.destination?.route?.split("/")?.get(0)
             }
+            topBarState.value = currentRoute?.showBackButton == true
+            menuVisible.value = currentRoute?.showMenu == true
 
             val topBarTitle = remember {
                 mutableStateOf("")
             }
 
-            FiapChallangeTheme {
-                Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
-                    SanyuTopBar(navHostController = navHostController, topBarTitle, topBarState, menuVisible)
-                }) { innerPadding ->
-                    NavGraph(topBarTitle, innerPadding, navHostController)
-                }
+
+            val isManager = remember {
+                mutableStateOf(false)
             }
 
+            FiapChallangeTheme {
+                Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
+                    SanyuTopBar(
+                        navHostController =
+                            if (::navHostController.isInitialized) {
+                                navHostController
+                            } else null,
+                        title = topBarTitle,
+                        topBarState = topBarState,
+                        menuVisible = menuVisible,
+                        isLoginPage = currentRoute == Route.LOGIN,
+                        isManager = isManager.value
+                    )
+                }) { innerPadding ->
+                    NavGraph(topBarTitle, innerPadding, navHostController, isManager = isManager)
+                }
+            }
             invalidateMenu()
-
         }
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        when(item.itemId){
+        if (::navHostController.isInitialized) {
+            when(item.itemId){
 
-            R.id.logout -> if (
-                ::navHostController.isInitialized
-            ){
+                R.id.chart_samples -> {
 
-                navHostController.navigate(Route.Login.route)
+                    navHostController.navigate(Route.CHARTS_SAMPLES.routeId)
 
-                return true
+                    return true
 
+                }
+
+                R.id.ranking -> {
+
+                    navHostController.navigate(Route.RANKING.routeId)
+
+                    return true
+
+                }
+
+                R.id.logout -> {
+
+                    navHostController.navigate(Route.LOGIN.routeId)
+
+                    return true
+
+                }
             }
         }
 
@@ -157,7 +111,17 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menu?.setGroupVisible(R.id.main_menu, route != Constants.Ui.LOGIN_ROUTE_ID)
+        val currentRoute = Route.entries.find {
+            it.routeId == route
+        }
+
+        this@MainActivity.actionBar?.setDisplayHomeAsUpEnabled(
+            currentRoute?.showBackButton == true
+        )
+        this@MainActivity.actionBar?.setDisplayShowHomeEnabled(
+            currentRoute?.showBackButton == true
+        )
+        menu?.setGroupVisible(R.id.main_menu, currentRoute?.showMenu == true)
 
         return super.onPrepareOptionsMenu(menu)
     }
@@ -171,60 +135,5 @@ class MainActivity : ComponentActivity() {
 
         return true
 
-    }
-
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun SanyuTopBar(
-        navHostController: NavHostController,
-        title: MutableState<String>,
-        topBarState: MutableState<Boolean>,
-        menuVisible: MutableState<Boolean>
-    ) {
-
-        var expanded by remember { mutableStateOf(false) }
-
-        TopAppBar(
-
-            actions = {
-
-                if (menuVisible.value){
-
-                    IconButton(onClick = { navHostController.navigate(Route.Ranking.route) }) {
-                        Icon(Icons.Default.Star, contentDescription = "Ranking")
-                    }
-
-                    IconButton(onClick = { expanded = true }) {
-                        Icon(Icons.Default.MoreVert, contentDescription = "Menu")
-                    }
-
-                    DropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false }
-                    ) {
-                        DropdownMenuItem(
-                            text = { Text("Logout") },
-                            onClick = {
-                                expanded = false
-                                if (::navHostController.isInitialized){
-
-                                    navHostController.navigate(Route.Login.route)
-
-                                }
-                            }
-                        )
-                    }
-                }
-            },
-
-            title = { Text(title.value) },
-            navigationIcon = {
-                if (topBarState.value == true) {
-                    IconButton(onClick = { navHostController.navigateUp() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                    }
-                }
-            },
-        )
     }
 }

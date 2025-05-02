@@ -7,6 +7,12 @@ import com.androidestudos.fiapchallange.data.CreateTarefaResult
 import com.androidestudos.fiapchallange.data.DeleteFuncionarioResult
 import com.androidestudos.fiapchallange.data.DeleteTarefasResult
 import com.androidestudos.fiapchallange.data.GetCargoResultList
+import com.androidestudos.fiapchallange.data.GetChartTaskPerDepartmentResult
+import com.androidestudos.fiapchallange.data.GetChartTaskPerDepartmentResultList
+import com.androidestudos.fiapchallange.data.GetChartTaskPerDifficultyResult
+import com.androidestudos.fiapchallange.data.GetChartTaskPerDifficultyResultList
+import com.androidestudos.fiapchallange.data.GetChartTaskPerRoleResult
+import com.androidestudos.fiapchallange.data.GetChartTaskPerRoleResultList
 import com.androidestudos.fiapchallange.data.GetDepartamentoResultList
 import com.androidestudos.fiapchallange.data.GetFuncionarioResultList
 import com.androidestudos.fiapchallange.data.GetTarefaResult
@@ -291,4 +297,57 @@ class APIServerDataSource(private val api: APIServer) {
     }
 
 
+    suspend fun getChartTaskPerRole(): GetChartTaskPerRoleResultList? {
+
+        return kotlin.runCatching{
+            val result = api.getChartTaskPerRole()
+            if (result.isSuccessful){
+                result.body()
+            }
+            else {
+                throw Exception("Erro desconhecido")
+            }
+
+        } .getOrElse{ e ->
+            Log.e(this::class.java.simpleName, "Falha ao buscar o grafico de tarefas por cargo ${e.message}")
+            null
+        }
+
+    }
+
+    suspend fun getChartTaskPerDepartment(): GetChartTaskPerDepartmentResultList? {
+
+        return kotlin.runCatching {
+            val result = api.getChartTaskPerDepartment()
+            if (result.isSuccessful) {
+                result.body()
+            } else {
+                throw Exception("Erro desconhecido")
+            }
+
+        }.getOrElse { e ->
+            Log.e(
+                this::class.java.simpleName,
+                "Falha ao buscar o grafico de tarefas por departamento ${e.message}"
+            )
+            null
+        }
+    }
+
+    suspend fun getChartTaskPerDifficulty(): GetChartTaskPerDifficultyResultList? {
+
+        return kotlin.runCatching{
+            val result = api.getChartTaskPerDifficulty()
+            if (result.isSuccessful){
+                result.body()
+            }
+            else {
+                throw Exception("Erro desconhecido")
+            }
+
+        } .getOrElse{ e ->
+            Log.e(this::class.java.simpleName, "Falha ao buscar o grafico de tarefas por dificuldade ${e.message}")
+            null
+        }
+    }
 }

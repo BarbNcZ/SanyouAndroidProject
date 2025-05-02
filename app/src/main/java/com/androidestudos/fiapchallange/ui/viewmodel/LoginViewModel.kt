@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.androidestudos.fiapchallange.data.LoginResult
 import com.androidestudos.fiapchallange.data.User
 import com.androidestudos.fiapchallange.repository.LoginRepository
-import com.androidestudos.fiapchallange.repository.TasksRepository
 import com.androidestudos.fiapchallange.ui.models.LoginEvents
 import com.androidestudos.fiapchallange.ui.models.LoginState
 import kotlinx.coroutines.channels.Channel
@@ -33,7 +32,7 @@ class LoginViewModel(
             val user = repository.login(
                 User(
                     email,
-                    String(Hex.encodeHex(DigestUtils.md5(password))).toUpperCase(Locale.getDefault())
+                    String(Hex.encodeHex(DigestUtils.md5(password))).uppercase(Locale.getDefault())
                 )
             )
             val userResult = user.last() ?: LoginResult(-1,"", "", "")

@@ -1,7 +1,6 @@
 package com.androidestudos.fiapchallange.ui.view.pages.menu
 
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.androidestudos.fiapchallange.ui.Route
 import com.androidestudos.fiapchallange.ui.viewmodel.MenuViewModel
@@ -15,16 +14,16 @@ fun MenuContainer(
 
     MenuScreen(
         goToEmployeesScreen = {
-            navHostController.navigate(Route.Employees.route)
+            navHostController.navigate(Route.EMPLOYEES.routeId)
         },
         goToCreateTaskScreen = {
-            navHostController.navigate(Route.CreateTarefa.route)
+            navHostController.navigate(Route.CREATE_TASK.routeId)
         },
         goToDeleteTaskScreen = {
-            navHostController.navigate(Route.DeleteTarefa.route)
+            navHostController.navigate(Route.DELETE_TASK.routeId)
         },
         goToDeleteFuncionarioScreen = {
-            navHostController.navigate(Route.DeleteFuncionario.route)
+            navHostController.navigate(Route.DELETE_EMPLOYEE.routeId)
         }
     )
 }

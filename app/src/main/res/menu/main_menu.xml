@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<group
-    android:id="@+id/main_menu"
-    android:title="Menu"
-    app:showAsAction="collapseActionView"
-    >
     <item
-        android:id="@+id/logout"
-        android:title="Logout"
-        app:showAsAction="withText"
+        android:id="@+id/chart_samples"
+        android:title="Chart Samples"
+        android:icon="@drawable/ic_pie_chart"
+        app:showAsAction="always"
         >
     </item>
-</group>
+    <item
+        android:id="@+id/ranking"
+        android:title="Ranking"
+        android:icon="@drawable/ic_star"
+        app:showAsAction="always"
+        >
+    </item>
+    <group
+        android:id="@+id/main_menu"
+        android:title="Menu"
+        app:showAsAction="collapseActionView"
+        >
+        <item
+            android:id="@+id/logout"
+            android:title="Logout"
+            app:showAsAction="withText"
+            >
+        </item>
+    </group>
 </menu>

@@ -8,6 +8,12 @@ import com.androidestudos.fiapchallange.data.DeleteFuncionarioResult
 import com.androidestudos.fiapchallange.data.DeleteTarefasResult
 import com.androidestudos.fiapchallange.data.GetCargoResult
 import com.androidestudos.fiapchallange.data.GetCargoResultList
+import com.androidestudos.fiapchallange.data.GetChartTaskPerDepartmentResult
+import com.androidestudos.fiapchallange.data.GetChartTaskPerDepartmentResultList
+import com.androidestudos.fiapchallange.data.GetChartTaskPerDifficultyResult
+import com.androidestudos.fiapchallange.data.GetChartTaskPerDifficultyResultList
+import com.androidestudos.fiapchallange.data.GetChartTaskPerRoleResult
+import com.androidestudos.fiapchallange.data.GetChartTaskPerRoleResultList
 import com.androidestudos.fiapchallange.data.GetDepartamentoResult
 import com.androidestudos.fiapchallange.data.GetDepartamentoResultList
 import com.androidestudos.fiapchallange.data.GetFuncionarioResultList
@@ -57,6 +63,15 @@ interface APIServer {
 
     @GET("/ranking")
     suspend fun getRanking(): Response<GetFuncionarioResultList>
+
+    @GET("/charttaskperdifficulty")
+    suspend fun getChartTaskPerDifficulty(): Response<GetChartTaskPerDifficultyResultList>
+
+    @GET("/charttaskperrole")
+    suspend fun getChartTaskPerRole(): Response<GetChartTaskPerRoleResultList>
+
+    @GET("/charttaskperdepartment")
+    suspend fun getChartTaskPerDepartment(): Response<GetChartTaskPerDepartmentResultList>
 
     @GET("/cargo")
     suspend fun getCargo(): Response<GetCargoResultList>

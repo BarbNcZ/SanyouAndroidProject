@@ -3,6 +3,7 @@ package com.androidestudos.fiapchallange.ui.view.pages.login
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
@@ -20,6 +21,7 @@ import org.koin.androidx.compose.koinViewModel
 fun LoginContainer(
     viewModel: LoginViewModel = koinViewModel(),
     navHostController: NavHostController,
+    isManager: MutableState<Boolean>,
 ){
 
     val state = viewModel.state.collectAsStateWithLifecycle()
@@ -38,18 +40,20 @@ fun LoginContainer(
                 scope.launch {
                     viewModel.event.collect{ event ->
                         when(event){
-                            is LoginEvents.LoginSuccessfully ->
-                                if (event.isManager){
-                                    navHostController.navigate (
-                                        Route.Menu.route
-                                    )
-                                }
-                                else{
-                                    navHostController.navigate (
-                                        "${Route.Tarefas.route}/${event.cdFuncionario}"
-                                    )
-                                }
+                            is LoginEvents.LoginSuccessfully -> {
 
+                                isManager.value = event.isManager
+
+                                if (event.isManager) {
+                                    navHostController.navigate(
+                                        Route.MENU.routeId
+                                    )
+                                } else {
+                                    navHostController.navigate(
+                                        "${Route.TASKS.routeId}/${event.cdFuncionario}"
+                                    )
+                                }
+                            }
                             LoginEvents.LoginFailed -> Toast.makeText(context, "Falha ao fazer Login", Toast.LENGTH_LONG).show()
                             else -> Unit
                         }
