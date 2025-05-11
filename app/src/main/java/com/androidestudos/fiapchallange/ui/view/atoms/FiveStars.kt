@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 
 private const val STAR_1_INDEX = 0
 private const val STAR_1_DIFFICULTY = 10
@@ -19,6 +20,7 @@ private const val STAR_5_DIFFICULTY = 100
 
 @Composable
 fun FiveStars (
+    modifier: Modifier = Modifier,
     onEstimationSet: (Int) -> Unit
 ){
     val stars: MutableList<Pair<MutableState<Boolean>, Int>> = mutableListOf()
@@ -37,7 +39,7 @@ fun FiveStars (
         )
     }
 
-    Row {
+    Row(modifier = modifier) {
         stars.forEachIndexed { index, star ->
             val activated = star.first
             val estimated = star.second

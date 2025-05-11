@@ -22,6 +22,12 @@ fun MenuContainer(
         goToDeleteTaskScreen = {
             navHostController.navigate(Route.DELETE_TASK.routeId)
         },
+        goToChartsScreen = {
+            navHostController.navigate(Route.CHARTS.routeId)
+        },
+        goToRankingScreen = {
+            navHostController.navigate(Route.RANKING.routeId)
+        },
         goToDeleteFuncionarioScreen = {
             navHostController.navigate(Route.DELETE_EMPLOYEE.routeId)
         }

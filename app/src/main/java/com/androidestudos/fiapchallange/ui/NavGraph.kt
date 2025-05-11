@@ -47,14 +47,14 @@ fun NavGraph(
 
         ) { stackEntry ->
             val cdFuncionario = stackEntry.arguments?.getInt(Constants.Ui.TASKS_EMPLOYEE_ID_ARGUMENT)
-            title.value = "Tarefas"
+            title.value = "Lista de Tarefas"
             Column(modifier = Modifier.padding(innerPaddings)) {
                 TasksContainer(navHostController = navController, cdFuncionario = cdFuncionario)
             }
         }
 
         composable(Route.EMPLOYEES.routeId) {
-            title.value = "Funcionarios"
+            title.value = "Criar Funcionário"
             LazyColumn(modifier = Modifier.padding(innerPaddings)) {
                 item {
                     CreateEmployeeContainer()
@@ -88,7 +88,7 @@ fun NavGraph(
         }
 
         composable(Route.CREATE_TASK.routeId) {
-            title.value = "Criar Tarefa"
+            title.value = "Criar Nova Tarefa"
             LazyColumn(modifier = Modifier.padding(innerPaddings)) {
                 item {
                     CreateTaskContainer(navHostController = navController)
@@ -97,7 +97,7 @@ fun NavGraph(
         }
 
         composable(Route.DELETE_TASK.routeId) {
-            title.value = "Deletar Tarefa"
+            title.value = "Excluir Tarefa"
             LazyColumn(modifier = Modifier.padding(innerPaddings)) {
                 item {
                     DeleteTaskContainer(navHostController = navController)
@@ -106,7 +106,7 @@ fun NavGraph(
         }
 
         composable(Route.DELETE_EMPLOYEE.routeId) {
-            title.value = "Deletar Funcionario"
+            title.value = "Excluir Funcionário"
             LazyColumn(modifier = Modifier.padding(innerPaddings)) {
                 item {
                     DeleteFuncionarioContainer(navHostController = navController)
@@ -124,7 +124,7 @@ fun NavGraph(
         }
 
         composable(Route.CHARTS.routeId) {
-            title.value = "Graficos"
+            title.value = "Análise de Performance"
             Column(modifier = Modifier.padding(innerPaddings)) {
                 ChartsContainer(navHostController = navController)
             }

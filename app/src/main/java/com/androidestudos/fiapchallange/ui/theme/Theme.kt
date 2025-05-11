@@ -66,6 +66,7 @@ fun FiapChallangeTheme(
 
 @Composable
 fun FiapChallangePreviewTheme(
+    title: String = "",
     showToolbar: Boolean = true,
     content: @Composable () -> Unit
 ) {
@@ -76,7 +77,7 @@ fun FiapChallangePreviewTheme(
                 if (showToolbar) {
                     SanyuTopBar(
                         navHostController = null,
-                        remember { mutableStateOf("Charts Samples") },
+                        remember { mutableStateOf(title) },
                         remember { mutableStateOf(true) },
                         remember { mutableStateOf(true) },
                         false,

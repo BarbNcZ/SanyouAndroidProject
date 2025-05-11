@@ -27,6 +27,8 @@ fun MenuScreen(
     goToEmployeesScreen: () -> Unit,
     goToCreateTaskScreen: () -> Unit,
     goToDeleteTaskScreen: () -> Unit,
+    goToChartsScreen: () -> Unit,
+    goToRankingScreen: () -> Unit,
     goToDeleteFuncionarioScreen: () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
@@ -117,6 +119,58 @@ fun MenuScreen(
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 30.dp),
                 colors = ButtonColors(
+                    containerColor = Color("#FFEAC7".toColorInt()),
+                    contentColor = Color.Black,
+                    disabledContainerColor = ButtonDefaults.buttonColors().disabledContainerColor,
+                    disabledContentColor = ButtonDefaults.buttonColors().disabledContentColor,
+                ),
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 15.dp
+                ),
+                border = BorderStroke(1.dp, Color.Black),
+                onClick = {
+                    goToChartsScreen()
+                }
+            ) {
+                Icon(
+                    modifier = Modifier.size(25.dp).padding(end = 5.dp),
+                    painter = painterResource(R.drawable.charts_button_icon),
+                    contentDescription = null
+                )
+                Text("Análise de Gráficos")
+            }
+
+            Button(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 30.dp),
+                colors = ButtonColors(
+                    containerColor = Color("#C1E9F2".toColorInt()),
+                    contentColor = Color.Black,
+                    disabledContainerColor = ButtonDefaults.buttonColors().disabledContainerColor,
+                    disabledContentColor = ButtonDefaults.buttonColors().disabledContentColor,
+                ),
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 15.dp
+                ),
+                border = BorderStroke(1.dp, Color.Black),
+                onClick = {
+                    goToRankingScreen()
+                }
+            ) {
+                Icon(
+                    modifier = Modifier.size(25.dp).padding(end = 5.dp),
+                    painter = painterResource(R.drawable.ranking_button_icon),
+                    contentDescription = null
+                )
+                Text("Ranking de Funcionários")
+            }
+
+            Button(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 30.dp),
+                colors = ButtonColors(
                     containerColor = Color("#FFDCDC".toColorInt()),
                     contentColor = Color.Black,
                     disabledContainerColor = ButtonDefaults.buttonColors().disabledContainerColor,
@@ -146,6 +200,8 @@ fun MenuScreen(
 fun MenuScreenPreview() {
     FiapChallangePreviewTheme {
         MenuScreen(
+            { },
+            { },
             { },
             { },
             { },

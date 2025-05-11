@@ -35,15 +35,18 @@ class CreateTarefaViewModel(
 
     fun createTask(cdTipoTarefa: Int, cdFuncionario: Int, dsTarefa: String, estimation: Int, time: Long) {
         viewModelScope.launch {
-            _state.value = _state.value.copy(
-                taskId = tasksRepository.createTask(
-                    taskTypeId = cdTipoTarefa,
-                    employeeId = cdFuncionario,
-                    task = dsTarefa,
-                    estimation = estimation,
-                    time = time
-                ).last()?.idTarefa ?: -1
-            )
+            val taskId = tasksRepository.createTask(
+                taskTypeId = cdTipoTarefa,
+                employeeId = cdFuncionario,
+                task = dsTarefa,
+                estimation = estimation,
+                time = time
+            ).last()?.idTarefa ?: -1
+            if (taskId > -1) {
+                _event.send(CreateTaskEvents.CreatedSuccessfully)
+            } else {
+                _event.send(CreateTaskEvents.CreationFailed)
+            }
         }
     }
 
